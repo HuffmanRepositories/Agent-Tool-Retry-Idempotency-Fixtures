@@ -1,0 +1,33 @@
+{
+  "id": "retry-009",
+  "title": "Retryable versus permanent error",
+  "category": "error-classification",
+  "status": "draft",
+  "description": "A tool returns an explicit transient failure in one case and a validation failure in another.",
+  "assumptions": [
+    "Error classifications are meaningful and documented by the tool."
+  ],
+  "events": [
+    {
+      "event": "response",
+      "error_class": "transient",
+      "effect_status": "not_committed"
+    },
+    {
+      "event": "response",
+      "error_class": "validation",
+      "effect_status": "not_committed"
+    }
+  ],
+  "expected": {
+    "outcome": "not_committed",
+    "handling": "Retry policy should distinguish transient conditions from permanent input errors and honor operation semantics."
+  },
+  "failure_modes": [
+    "Retry loops on permanent errors",
+    "Treating every error as proof that no effect occurred"
+  ],
+  "notes": [
+    "Error labels alone may be insufficient if a side effect could have occurred."
+  ]
+}
