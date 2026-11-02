@@ -1,0 +1,40 @@
+{
+  "id": "retry-006",
+  "title": "Partial effect requires reconciliation",
+  "category": "partial-commit",
+  "status": "draft",
+  "description": "A multi-step tool operation commits one step but fails before completing the whole operation.",
+  "assumptions": [
+    "Operation contains multiple externally observable steps.",
+    "No atomic transaction spans every step."
+  ],
+  "events": [
+    {
+      "event": "request",
+      "operation_id": "op-6",
+      "idempotency_key": "k-6"
+    },
+    {
+      "event": "step_committed",
+      "step": 1
+    },
+    {
+      "event": "step_failed",
+      "step": 2
+    },
+    {
+      "event": "retry_attempt"
+    }
+  ],
+  "expected": {
+    "outcome": "unknown",
+    "handling": "Reconcile prior step state or use compensating/domain-specific recovery before replaying the whole operation."
+  },
+  "failure_modes": [
+    "Blind replay duplicates step 1",
+    "Assuming rollback occurred without evidence"
+  ],
+  "notes": [
+    "Compensation is not equivalent to atomic rollback."
+  ]
+}
