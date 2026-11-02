@@ -1,0 +1,47 @@
+{
+  "id": "retry-012",
+  "title": "Retry exhaustion with unknown outcome",
+  "category": "retry-budget",
+  "status": "draft",
+  "description": "Caller exhausts retry budget while last operation status remains unknown.",
+  "assumptions": [
+    "No authoritative status endpoint available within budget."
+  ],
+  "events": [
+    {
+      "event": "request",
+      "attempt": 1,
+      "operation_id": "op12",
+      "key": "k12"
+    },
+    {
+      "event": "timeout",
+      "attempt": 1,
+      "status": "unknown"
+    },
+    {
+      "event": "retry",
+      "attempt": 2,
+      "status": "unknown"
+    },
+    {
+      "event": "timeout",
+      "attempt": 2,
+      "status": "unknown"
+    },
+    {
+      "event": "budget_exhausted"
+    }
+  ],
+  "expected": {
+    "outcome": "unknown",
+    "handling": "Surface unresolved status and reconciliation reference; don't report definitive failure if effect may have committed."
+  },
+  "failure_modes": [
+    "False failure report",
+    "Unbounded retries"
+  ],
+  "notes": [
+    "Unknown can be a terminal caller-visible state."
+  ]
+}
