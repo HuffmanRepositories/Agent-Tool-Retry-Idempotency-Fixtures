@@ -54,3 +54,7 @@ An idempotency key is not magic. A correct retry policy depends on the operation
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md), [fixture format](docs/fixture-format.md), and [review checklist](docs/review-checklist.md).
+
+## Ecosystem directory
+
+This project is part of the [HuffmanRepositories public ecosystem](https://github.com/HuffmanRepositories/Huffman-Ecosystem-Root). Use the directory for project routing, human and AI onboarding, shared terminology, governance, and related workstreams. This repository's own README and specifications remain authoritative for its scope, maturity, and validation status.
