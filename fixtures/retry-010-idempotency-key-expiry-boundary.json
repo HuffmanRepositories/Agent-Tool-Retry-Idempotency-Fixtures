@@ -1,0 +1,38 @@
+{
+  "id": "retry-010",
+  "title": "Idempotency-key expiry boundary",
+  "category": "retention",
+  "status": "draft",
+  "description": "A retry arrives near or after the key retention boundary.",
+  "assumptions": [
+    "The implementation has a documented finite key-retention period."
+  ],
+  "events": [
+    {
+      "event": "first_request",
+      "operation_id": "op-10",
+      "idempotency_key": "k-10",
+      "time": "t0"
+    },
+    {
+      "event": "effect_committed"
+    },
+    {
+      "event": "retry_request",
+      "operation_id": "op-10",
+      "idempotency_key": "k-10",
+      "time": "t_expiry_plus_delta"
+    }
+  ],
+  "expected": {
+    "outcome": "unknown",
+    "handling": "Document expiry semantics and consider operation-state reconciliation before retrying after deduplication records may have expired."
+  },
+  "failure_modes": [
+    "Assuming deduplication survives beyond retention",
+    "Silently replaying after key record expiry"
+  ],
+  "notes": [
+    "The boundary and retention policy are implementation-specific."
+  ]
+}
