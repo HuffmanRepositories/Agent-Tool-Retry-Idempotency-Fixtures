@@ -11,6 +11,9 @@ This repository documents retry and side-effect edge cases. It does not implemen
 ## Before acting
 Read [START-HERE.md](START-HERE.md), the fixture format, fixture status, and review checklist.
 
+## Companion routing
+For cross-boundary cases, expand only the needed companion fixture corpus: [P13 delegation scope](https://github.com/HuffmanRepositories/Agent-Delegation-Scope-Boundary-Fixtures), [P14 budget enforcement](https://github.com/HuffmanRepositories/Agent-Delegated-Budget-Enforcement-Fixtures), and [P15 stop reference model](https://github.com/HuffmanRepositories/Huffman-Ecosystem-Root/tree/main/p15). They complement P12 but do not turn this repository into a runtime or imply a required deployment dependency.
+
 ## Safety and semantics
 - Keep fixtures synthetic and offline.
 - Never add real service traces, credentials, personal data, or live side-effecting operations.
