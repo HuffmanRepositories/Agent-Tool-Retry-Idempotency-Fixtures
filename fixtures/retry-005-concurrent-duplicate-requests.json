@@ -1,0 +1,42 @@
+{
+  "id": "retry-005",
+  "title": "Concurrent duplicate requests",
+  "category": "concurrency",
+  "status": "draft",
+  "description": "Two attempts with the same logical identity arrive concurrently.",
+  "assumptions": [
+    "Both attempts carry identical operation identity and payload.",
+    "A shared durable coordination mechanism may or may not exist."
+  ],
+  "events": [
+    {
+      "attempt": 1,
+      "event": "request",
+      "operation_id": "op-5",
+      "idempotency_key": "k-5",
+      "payload_digest": "sha256:synthetic-A"
+    },
+    {
+      "attempt": 2,
+      "event": "concurrent_request",
+      "operation_id": "op-5",
+      "idempotency_key": "k-5",
+      "payload_digest": "sha256:synthetic-A"
+    },
+    {
+      "event": "effect_observed",
+      "count": 1
+    }
+  ],
+  "expected": {
+    "outcome": "completed",
+    "handling": "A system claiming deduplication should define concurrent claim behavior and prevent unintended duplicate effects."
+  },
+  "failure_modes": [
+    "Race between key lookup and effect commit",
+    "Two workers both perform effect"
+  ],
+  "notes": [
+    "A local in-memory cache may not coordinate across workers."
+  ]
+}
