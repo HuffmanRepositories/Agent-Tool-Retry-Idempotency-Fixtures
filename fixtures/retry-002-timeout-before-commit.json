@@ -1,0 +1,43 @@
+{
+  "id": "retry-002",
+  "title": "Timeout before effect commit",
+  "category": "timeout",
+  "status": "draft",
+  "description": "The request times out before the tool commits the side effect.",
+  "assumptions": [
+    "The system can reliably establish that no effect was committed."
+  ],
+  "events": [
+    {
+      "attempt": 1,
+      "event": "request",
+      "operation_id": "op-2",
+      "idempotency_key": "k-2"
+    },
+    {
+      "attempt": 1,
+      "event": "timeout"
+    },
+    {
+      "attempt": 1,
+      "event": "effect_status",
+      "status": "not_committed"
+    },
+    {
+      "attempt": 2,
+      "event": "retry_request",
+      "operation_id": "op-2",
+      "idempotency_key": "k-2"
+    }
+  ],
+  "expected": {
+    "outcome": "not_committed",
+    "handling": "Retry may be considered if operation contract and evidence support non-commit."
+  },
+  "failure_modes": [
+    "Retrying without trustworthy commit-state evidence"
+  ],
+  "notes": [
+    "This differs from a timeout where commit status is unknown."
+  ]
+}
