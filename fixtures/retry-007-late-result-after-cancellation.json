@@ -1,0 +1,37 @@
+{
+  "id": "retry-007",
+  "title": "Late result after cancellation",
+  "category": "cancellation",
+  "status": "draft",
+  "description": "The caller cancels an operation, but a late completion arrives afterward.",
+  "assumptions": [
+    "Cancellation does not guarantee remote side-effect rollback."
+  ],
+  "events": [
+    {
+      "event": "request",
+      "operation_id": "op-7",
+      "idempotency_key": "k-7"
+    },
+    {
+      "event": "cancel_requested"
+    },
+    {
+      "event": "caller_marks_cancelled"
+    },
+    {
+      "event": "late_effect_committed"
+    }
+  ],
+  "expected": {
+    "outcome": "unknown",
+    "handling": "Record the late result and reconcile state; cancellation acknowledgement alone must not be treated as proof of no effect."
+  },
+  "failure_modes": [
+    "State says cancelled while effect committed",
+    "Subsequent retry creates a second effect"
+  ],
+  "notes": [
+    "Cancellation semantics are tool-specific."
+  ]
+}
