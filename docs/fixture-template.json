@@ -1,0 +1,28 @@
+{
+  "id": "retry-XXX",
+  "title": "Short title",
+  "category": "category",
+  "status": "draft",
+  "description": "Synthetic scenario description.",
+  "assumptions": [
+    "Explicit assumption"
+  ],
+  "events": [
+    {
+      "attempt": 1,
+      "event": "request",
+      "operation_id": "op-1",
+      "idempotency_key": "key-1"
+    }
+  ],
+  "expected": {
+    "outcome": "unknown",
+    "handling": "Describe expected interpretation without asserting a universal policy."
+  },
+  "failure_modes": [
+    "Potential failure"
+  ],
+  "notes": [
+    "Scope caveat"
+  ]
+}
