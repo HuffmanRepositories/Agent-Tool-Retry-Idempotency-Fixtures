@@ -1,0 +1,37 @@
+{
+  "id": "retry-003",
+  "title": "Same key with changed payload",
+  "category": "key-conflict",
+  "status": "draft",
+  "description": "A caller reuses one idempotency key with a different payload.",
+  "assumptions": [
+    "Key scope includes the logical operation and request identity."
+  ],
+  "events": [
+    {
+      "attempt": 1,
+      "event": "request",
+      "operation_id": "op-3",
+      "idempotency_key": "k-3",
+      "payload_digest": "sha256:synthetic-A"
+    },
+    {
+      "attempt": 2,
+      "event": "retry_request",
+      "operation_id": "op-3",
+      "idempotency_key": "k-3",
+      "payload_digest": "sha256:synthetic-B"
+    }
+  ],
+  "expected": {
+    "outcome": "conflict",
+    "handling": "Detect or clearly surface incompatible reuse; do not silently treat changed input as the original request."
+  },
+  "failure_modes": [
+    "Executing both payloads under one key",
+    "Returning a cached result unrelated to current input"
+  ],
+  "notes": [
+    "Exact conflict behavior is implementation-specific."
+  ]
+}
