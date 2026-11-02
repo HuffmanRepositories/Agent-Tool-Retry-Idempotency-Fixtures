@@ -43,6 +43,14 @@ python -m unittest discover -s tests
 
 The [synthetic SQLite idempotency harness](docs/synthetic-idempotency-harness.md) exercises crash/replay, concurrent duplicate requests, key conflicts, and scope isolation. It is a local model only; it does not demonstrate external provider exactly-once behavior.
 
+## Companion projects (when a scenario crosses boundaries)
+
+- [P13 — Delegation Scope Boundary Fixtures](https://github.com/HuffmanRepositories/Agent-Delegation-Scope-Boundary-Fixtures) for delegated actor/resource authority.
+- [P14 — Delegated Budget Enforcement Fixtures](https://github.com/HuffmanRepositories/Agent-Delegated-Budget-Enforcement-Fixtures) for budget reservations, settlement, release, and hierarchical caps.
+- [P15 — User-Controlled Stop Reference Model](https://github.com/HuffmanRepositories/Huffman-Ecosystem-Root/tree/main/p15) for stop/cancellation/containment semantics.
+
+These are companion fixture sets, not runtime dependencies. Include only the components relevant to the scenario; each project retains its own scope and maturity.
+
 ## Design principle
 
 An idempotency key is not magic. A correct retry policy depends on the operation's semantics, key scope and retention, request identity, durable effect recording, and how the caller handles an unknown outcome. “Exactly once” should not be inferred from retry suppression alone.
