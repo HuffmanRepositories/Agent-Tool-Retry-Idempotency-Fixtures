@@ -1,0 +1,46 @@
+{
+  "id": "retry-001",
+  "title": "Effect committed, response lost",
+  "category": "ambiguous-outcome",
+  "status": "draft",
+  "description": "A mutating tool performs its effect, but the caller times out before receiving the result.",
+  "assumptions": [
+    "The effect is committed before response delivery.",
+    "The caller cannot infer commit status from the timeout."
+  ],
+  "events": [
+    {
+      "attempt": 1,
+      "event": "request",
+      "operation_id": "op-1",
+      "idempotency_key": "k-1",
+      "payload_digest": "sha256:synthetic-A"
+    },
+    {
+      "attempt": 1,
+      "event": "effect_committed"
+    },
+    {
+      "attempt": 1,
+      "event": "response_lost"
+    },
+    {
+      "attempt": 2,
+      "event": "retry_request",
+      "operation_id": "op-1",
+      "idempotency_key": "k-1",
+      "payload_digest": "sha256:synthetic-A"
+    }
+  ],
+  "expected": {
+    "outcome": "completed",
+    "handling": "A retry should resolve to the original operation result or consult operation state; it must not assume the effect is absent."
+  },
+  "failure_modes": [
+    "Duplicate side effect due to replay",
+    "Returning an inaccurate not-committed status"
+  ],
+  "notes": [
+    "Exactly-once execution is not implied; behavior depends on durable idempotency implementation."
+  ]
+}
