@@ -39,7 +39,11 @@ python scripts/validate_fixtures.py
 python -m unittest discover -s tests
 ```
 
-## Experimental harness\n\nThe [synthetic SQLite idempotency harness](docs/synthetic-idempotency-harness.md) exercises crash/replay, concurrent duplicate requests, key conflicts, and scope isolation. It is a local model only; it does not demonstrate external provider exactly-once behavior.\n\n## Design principle
+## Experimental harness
+
+The [synthetic SQLite idempotency harness](docs/synthetic-idempotency-harness.md) exercises crash/replay, concurrent duplicate requests, key conflicts, and scope isolation. It is a local model only; it does not demonstrate external provider exactly-once behavior.
+
+## Design principle
 
 An idempotency key is not magic. A correct retry policy depends on the operation's semantics, key scope and retention, request identity, durable effect recording, and how the caller handles an unknown outcome. “Exactly once” should not be inferred from retry suppression alone.
 
