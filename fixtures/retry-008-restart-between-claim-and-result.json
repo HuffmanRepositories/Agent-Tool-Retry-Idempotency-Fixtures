@@ -1,0 +1,40 @@
+{
+  "id": "retry-008",
+  "title": "Worker restart between durable claim and result record",
+  "category": "durability",
+  "status": "draft",
+  "description": "A worker claims an operation durably, performs the effect, and crashes before storing the result.",
+  "assumptions": [
+    "The external effect and local result store are not one atomic transaction."
+  ],
+  "events": [
+    {
+      "event": "durable_claim",
+      "operation_id": "op-8",
+      "idempotency_key": "k-8"
+    },
+    {
+      "event": "effect_committed"
+    },
+    {
+      "event": "worker_crash"
+    },
+    {
+      "event": "worker_restart"
+    },
+    {
+      "event": "retry_or_recovery"
+    }
+  ],
+  "expected": {
+    "outcome": "unknown",
+    "handling": "Use recovery state, downstream idempotency, or reconciliation; the durable claim alone cannot prove effect status."
+  },
+  "failure_modes": [
+    "Replaying because result record is missing",
+    "Permanently suppressing retry despite an effect that never happened"
+  ],
+  "notes": [
+    "This is a distributed consistency boundary."
+  ]
+}
