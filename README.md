@@ -1,6 +1,6 @@
 # Agent Tool Retry & Idempotency Fixtures
 
-[Start here](START-HERE.md) · [AI agent guidance](AGENTS.md)
+[Start here](START-HERE.md) · [Whitepaper](WHITEPAPER.md) · [AI agent guidance](AGENTS.md)
 
 
 An implementation-neutral, synthetic fixture corpus for reviewing retry and idempotency behavior in agent tool execution.
