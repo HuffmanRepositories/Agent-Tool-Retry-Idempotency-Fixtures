@@ -1,0 +1,44 @@
+{
+  "id": "retry-011",
+  "title": "Read-only versus mutating retry",
+  "category": "operation-semantics",
+  "status": "draft",
+  "description": "Compare a safe-to-repeat read operation with a side-effecting write operation.",
+  "assumptions": [
+    "Read is truly side-effect free; write may change state."
+  ],
+  "events": [
+    {
+      "event": "read_request",
+      "attempt": 1,
+      "operation_id": "op-11r"
+    },
+    {
+      "event": "read_timeout"
+    },
+    {
+      "event": "read_retry",
+      "attempt": 2
+    },
+    {
+      "event": "write_request",
+      "attempt": 1,
+      "operation_id": "op-11w",
+      "idempotency_key": "k-11w"
+    },
+    {
+      "event": "write_timeout"
+    }
+  ],
+  "expected": {
+    "outcome": "unknown",
+    "handling": "Do not apply one blanket retry rule to both operations; evaluate read purity and write commit status."
+  },
+  "failure_modes": [
+    "Assuming all tool calls are safe to retry",
+    "Ignoring hidden side effects in nominal reads"
+  ],
+  "notes": [
+    "A read may still have billing, rate-limit, or audit effects."
+  ]
+}
