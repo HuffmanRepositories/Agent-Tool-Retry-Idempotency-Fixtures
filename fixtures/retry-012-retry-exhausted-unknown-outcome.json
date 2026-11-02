@@ -11,23 +11,30 @@
     {
       "event": "request",
       "attempt": 1,
-      "operation_id": "op12",
-      "key": "k12"
+      "operation_id": "op-12",
+      "key": "k12",
+      "idempotency_key": "k-12"
     },
     {
       "event": "timeout",
       "attempt": 1,
-      "status": "unknown"
+      "status": "unknown",
+      "operation_id": "op-12",
+      "idempotency_key": "k-12"
     },
     {
-      "event": "retry",
+      "event": "retry_request",
       "attempt": 2,
-      "status": "unknown"
+      "status": "unknown",
+      "operation_id": "op-12",
+      "idempotency_key": "k-12"
     },
     {
       "event": "timeout",
       "attempt": 2,
-      "status": "unknown"
+      "status": "unknown",
+      "operation_id": "op-12",
+      "idempotency_key": "k-12"
     },
     {
       "event": "budget_exhausted"
