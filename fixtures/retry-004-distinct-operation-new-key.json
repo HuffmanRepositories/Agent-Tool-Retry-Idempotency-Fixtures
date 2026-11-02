@@ -1,0 +1,37 @@
+{
+  "id": "retry-004",
+  "title": "Distinct logical operation uses a new key",
+  "category": "operation-identity",
+  "status": "draft",
+  "description": "Two intentionally distinct side effects use separate idempotency keys.",
+  "assumptions": [
+    "The caller intends two independent operations."
+  ],
+  "events": [
+    {
+      "attempt": 1,
+      "event": "request",
+      "operation_id": "op-4a",
+      "idempotency_key": "k-4a",
+      "payload_digest": "sha256:synthetic-A"
+    },
+    {
+      "attempt": 1,
+      "event": "request",
+      "operation_id": "op-4b",
+      "idempotency_key": "k-4b",
+      "payload_digest": "sha256:synthetic-B"
+    }
+  ],
+  "expected": {
+    "outcome": "completed",
+    "handling": "Distinct intended operations should not be accidentally deduplicated because of key reuse."
+  },
+  "failure_modes": [
+    "Reusing a key across unrelated operations",
+    "Deduplicating legitimate independent effects"
+  ],
+  "notes": [
+    "Key scope and operation identity should be documented."
+  ]
+}
